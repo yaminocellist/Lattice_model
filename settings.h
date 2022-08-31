@@ -16,6 +16,7 @@
 extern double pi;
 using std::valarray;
 using std::vector;
+using vector2d = vector<vector <double>>;
 
 struct Parameters {
     /**************************
@@ -59,10 +60,21 @@ struct Parameters {
 
     /*  For proteins:  */
     int f = 2;                  // total number of types of proteins, default to be 2 (TF & histone octamer);
-    vector<int> mf;             // storing binding length mg of type-g protein;
+    vector<int> mg;          	// storing binding length mg of type-g protein;
+	vector<int> Vg;				// storing max interaction distance of type-g protein;
+	vector<double> K_n_g;		// storing binding constant of type-g protein;
+	vector<double> C_0_g;		// indicate concentration of type-g protein;
+	
+
     /**************************
     *   Calculated variables:
     ***************************/
+   	int dimensions = 0;				// Dimension for each Q_n(i, j);
+	vector2d Q_n;				// Conditional probability matrix for each DNA segment;
+
+
+
+
     double a_B;                 // B - DNA bending elasticity;
 	double c_B;                 // B - DNA twisting elasticity;
 	double q;                   // number of DNA base - pairs in individual DNA segment;
