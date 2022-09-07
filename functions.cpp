@@ -24,9 +24,9 @@ void print2dv (vector2d v) {
 }
 
 /*  Returning ∑mg:  */
-int sum_mg (vector<int> mg, int it) {
+int sum_mg (vector<int> mg, int g) {
     int res = 0; int index = 0;
-    while (index <= it) {
+    while (index < g) {
         res += mg[index];
         index++;
     }
