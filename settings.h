@@ -11,12 +11,14 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include "functions.h"
 #include <boost/math/constants/constants.hpp>
 
 extern double pi;
 using std::valarray;
 using std::vector;
 using vector2d = vector<vector <double>>;
+using vector3d = vector<vector<vector <double>>>;
 
 struct Parameters {
     /**************************
@@ -48,6 +50,9 @@ struct Parameters {
     double plus_coeff = 1.0001;
     double minus_coeff = 0.9999;
 
+	/*	for the row vector on the left-handed side, and the column vector on the right-handed side:  */
+	vector<double> left; vector<double> right;
+
     /**************************
     *   Input variables:
     ***************************/
@@ -62,15 +67,17 @@ struct Parameters {
     int f = 2;                  // total number of types of proteins, default to be 2 (TF & histone octamer);
     vector<int> mg;          	// storing binding length mg of type-g protein;
 	vector<int> Vg;				// storing max interaction distance of type-g protein;
-	vector<double> K_n_g;		// storing binding constant of type-g protein;
-	vector<double> C_0_g;		// indicate concentration of type-g protein;
+	vector2d K_n_g;				// binding constant of type-g protein with binding sites information n;
+	vector<double> C_0_g;		// concentration of type-g protein;
+	vector<double> Unwrap;		// weight for unwrapping branches of type-g protein;
+	vector2d w_g1_g2;			// interaction between type-g1 and type-g2 proteins; 
 	
 
     /**************************
     *   Calculated variables:
     ***************************/
    	int dimensions = 0;				// Dimension for each Q_n(i, j);
-	vector2d Q_n;				// Conditional probability matrix for each DNA segment;
+	vector3d Q_n;				// Conditional probability matrix for each DNA segment;
 
 
 
@@ -132,4 +139,9 @@ struct Parameters {
 	valarray<double> coeff_r_total_P_minus;
 };
 
+
+
+/*	Part for functions:  */
+void set_param (Parameters &p, int argc, char *argv[]);
+void set_Q (Parameters &p);
 #endif
