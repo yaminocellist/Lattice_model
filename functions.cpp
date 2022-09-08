@@ -23,27 +23,39 @@ void print2dv (vector2d v) {
     }
 }
 
-/*  Returning ∑mg:  */
-int sum_mg (vector<int> mg, int g) {
-    int res = 0; int index = 0;
-    while (index < g) {
-        res += mg[index];
-        index++;
+void print3dv (vector3d v) {
+    for (int i = 0; i < v.size(); i++) {
+        for (int j = 0; j < v[i].size(); j++) {
+            for (int k = 0; k < v[i][j].size(); k++) {
+                std::cout << v[i][j][k] << "   ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
     }
-    return res;
 }
 
+/*  Returning ∑mg:  */
+// int sum_mg (vector<int> mg, int g) {
+//     int res = 0; int index = 0;
+//     while (index < g) {
+//         res += mg[index];
+//         index++;
+//     }
+//     return res;
+// }
+
 /*  Returns the value of current g (For Algorithm Table 1, 2, 3):  */
-int find_g_1 (int i, vector<int> mg, int f) {
-    int g = -1;
-    for (int c = 0; c < f; c++) {
-        if (i > sum_mg(mg, c - 1) && i <= sum_mg(mg, c)) {
-            g = c;
-            break;
-        }
-    }
-    return g;
-}
+// int find_g_1 (int i, vector<int> mg, int f) {
+//     int g = 0;
+//     for (int c = 0; c < f; c++) {
+//         if (i >= sum_mg(mg, c) && i <= sum_mg(mg, c + 1) - 1) {
+//             g = c;
+//             break;
+//         }
+//     }
+//     return g;
+// }
 
 /*  Find the first non-zero element of the vector, return its index:  */
 int first_non_zero (vector<double> v) {
