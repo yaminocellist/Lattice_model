@@ -11,7 +11,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
-#include "functions.h"
+
 #include <boost/math/constants/constants.hpp>
 
 extern double pi;
@@ -76,13 +76,61 @@ struct Parameters {
     /**************************
     *   Calculated variables:
     ***************************/
-   	int dimensions = 0;				// Dimension for each Q_n(i, j);
+   	/*	Frequently used functions:  */
+	// Returning ∑mg:
+	int sum_mg(int g) {
+		int res = 0; int index = 0;
+    	while (index < g) {
+    	    res += mg[index];
+    	    index++;
+    	}
+    	return res;
+	}
+
+	// Returning ∑(mg + Vg):
+	int sum_mgVg (int g) {
+		int init = sum_mg(f) + 1;
+		int index = 0;
+		while (index < g) {
+			init += Vg[index];
+			index++;
+		}
+		return init;
+	}
+
+	// Returns the value of current g for bound states: 
+	int find_g_1 (int i) {
+    	int g = 0;
+    	for (int c = 0; c < f; c++) {
+    	    if (i >= sum_mg(c) && i <= sum_mg(c + 1) - 1) {
+    	        g = c;
+    	        break;
+    	    }
+    	}
+    	return g;
+	}
+
+	// Returns the value of current g for g1-g2 gap states:
+	int find_g_2 (int i) {
+		int g = 0;
+		for (int c = 0; c < f; c++) {
+			if (i >= sum_mgVg(c) + 1 && i <= sum_mgVg(c + 1)) {
+				g = c;
+				break;
+			}
+		}
+		return g;
+	}
+
+   	int dimensions = 0;			// Dimension for each Q_n(i, j);
 	vector3d Q_n;				// Conditional probability matrix for each DNA segment;
+	int bound_cap;				// STATE enum upper limit for bound states, [0, bound_cap) refers to bound states;
+	int gap_cap;				// STATE enum upper limit for g1-g2 gap states, [) refers to these gap states;
 
-
-
-
-    double a_B;                 // B - DNA bending elasticity;
+	/**************************
+    *   Mechanical related:
+    ***************************/	
+	double a_B;                 // B - DNA bending elasticity;
 	double c_B;                 // B - DNA twisting elasticity;
 	double q;                   // number of DNA base - pairs in individual DNA segment;
 	double a_L;                 // L - DNA bending elasticity;
@@ -137,6 +185,8 @@ struct Parameters {
 	valarray<double> coeff_r_total_P;
 	valarray<double> coeff_r_total_P_plus;
 	valarray<double> coeff_r_total_P_minus;
+
+	
 };
 
 
