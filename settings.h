@@ -11,6 +11,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <eigen3/Eigen/Dense>
 
 #include <boost/math/constants/constants.hpp>
 
@@ -19,6 +20,7 @@ using std::valarray;
 using std::vector;
 using vector2d = vector<vector <double>>;
 using vector3d = vector<vector<vector <double>>>;
+using Eigen::MatrixXd;
 
 struct Parameters {
     /**************************
@@ -98,32 +100,59 @@ struct Parameters {
 		return init;
 	}
 
-	// Returns the value of current g for bound states: 
-	int find_g_1 (int i) {
-    	int g = 0;
-    	for (int c = 0; c < f; c++) {
-    	    if (i >= sum_mg(c) && i <= sum_mg(c + 1) - 1) {
-    	        g = c;
-    	        break;
-    	    }
-    	}
-    	return g;
-	}
+	// // Returns the value of current g for bound states: 
+	// int find_g_1 (int i) {
+    // 	int g = 0;
+    // 	for (int c = 0; c < f; c++) {
+    // 	    if (i >= sum_mg(c) && i <= sum_mg(c + 1) - 1) {
+    // 	        g = c;
+    // 	        break;
+    // 	    }
+    // 	}
+    // 	return g;
+	// }
 
-	// Returns the value of current g for g1-g2 gap states:
-	int find_g_2 (int i) {
+	// // Returns the value of current g for g1-g2 gap states:
+	// int find_g_2 (int i) {
+	// 	int g = 0;
+	// 	for (int c = 0; c < f; c++) {
+	// 		if (i >= sum_mgVg(c) + 1 && i <= sum_mgVg(c + 1)) {
+	// 			g = c;
+	// 			break;
+	// 		}
+	// 	}
+	// 	return g;
+	// }
+
+	// Returns the value of current g:
+	int find_g (int i) {
 		int g = 0;
-		for (int c = 0; c < f; c++) {
-			if (i >= sum_mgVg(c) + 1 && i <= sum_mgVg(c + 1)) {
-				g = c;
-				break;
-			}
+		if (i < sum_mg(f)) {
+			for (int c = 0; c < f; c++) {
+    		    if (i >= sum_mg(c) && i <= sum_mg(c + 1) - 1) {
+    		        g = c;
+    		        break;
+    		    }
+    		}
+    		return g;
 		}
-		return g;
+		else if (i == sum_mg(f) || i == sum_mg(f) + 1 || i >= sum_mgVg(f) + 1) {
+			return -1;
+		}
+		else {
+			for (int c = 0; c < f; c++) {
+				if (i >= sum_mgVg(c) + 1 && i <= sum_mgVg(c + 1)) {
+					g = c;
+					break;
+				}
+			}
+			return g;
+		}
 	}
 
    	int dimensions = 0;			// Dimension for each Q_n(i, j);
-	vector3d Q_n;				// Conditional probability matrix for each DNA segment;
+	// vector3d Q_n;				// Conditional probability matrix for each DNA segment;
+	std::vector<MatrixXd> Q_n;
 	int bound_cap;				// STATE enum upper limit for bound states, [0, bound_cap) refers to bound states;
 	int gap_cap;				// STATE enum upper limit for g1-g2 gap states, [) refers to these gap states;
 
@@ -194,4 +223,5 @@ struct Parameters {
 /*	Part for functions:  */
 void set_param (Parameters &p, int argc, char *argv[]);
 void set_Q (Parameters &p);
+void set_Q_n (Parameters &p);
 #endif
