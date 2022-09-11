@@ -9,5 +9,5 @@ g++ -I/opt/homebrew/Cellar/boost/1.78.0_1/include -I/opt/homebrew/Cellar/eigen/3
 
 g++ *.cpp -I /usr/include/eigen3 -std=c++14 -lstdc++fs && ./a.out 4 7 12.8 10 12 13 11.3 10 2 1 59.7 10 3 0
 
-# To give the system permission of edit permission, use:
+# To give the system permission of editing, use:
 sudo chown -R yaminocellist:yaminocellist Lattice_model
