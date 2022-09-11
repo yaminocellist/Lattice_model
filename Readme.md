@@ -1,6 +1,6 @@
 # Based on Teif's Lattice model papers;
 # Input format:
-# (Protein 1's) mg, Vg, binding constant, concentration (Protein 2's) mg, Vg, binding constant, concentration, ... (cycling), target n(th segment of DNA), target g(th protein);
+(Protein 1's) mg, Vg, binding constant, concentration (Protein 2's) mg, Vg, binding constant, concentration, ... (cycling), target n(th segment of DNA), target g(th protein);
 
 # Run in Macos, use:
 g++ -I/opt/homebrew/Cellar/boost/1.78.0_1/include -I/opt/homebrew/Cellar/eigen/3.4.0_1/include *.cpp -std=c++14 && ./a.out 4 7 12.8 10 12 13 11.3 10 2 1 59.7 10
