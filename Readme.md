@@ -11,3 +11,5 @@ g++ *.cpp -I /usr/include/eigen3 -std=c++14 -lstdc++fs && ./a.out 4 7 12.8 10 12
 
 # To give the system permission of editing, use:
 sudo chown -R yaminocellist:yaminocellist Lattice_model
+
+e<sup>x</sup>
