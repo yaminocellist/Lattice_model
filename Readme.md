@@ -1,11 +1,11 @@
 # Based on Teif's Lattice model papers;
 
-# The partition function (normalization coefficient) is easy to calculate through:
+The partition function (normalization coefficient) is easy to calculate through:
 
 Z = &Sigma;<sub>i</sub>(e<sup>-&beta;H<sub>i</sub></sup>)
 
-# where the summation is over all possible combinations of DNA and proteins;
-# Then the probability of i-th combination is given by:
+where the summation is over all possible combinations of DNA and proteins;
+Then the probability of i-th combination is given by:
 
 p<sub>i</sub> = 1/Z * e<sup>-&beta;H<sub>i</sub></sup>
 
